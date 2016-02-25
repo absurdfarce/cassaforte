@@ -26,7 +26,7 @@
             [qbits.hayt.cql :as hayt])
   (:import [com.datastax.driver.core Statement ResultSet ResultSetFuture Host Session Cluster
             Cluster$Builder SimpleStatement PreparedStatement HostDistance PoolingOptions
-            SSLOptions JdkSSLOptions JdkSSLOptions$Builder ProtocolOptions$Compression ProtocolVersion]
+            SSLOptions JdkSSLOptions ProtocolOptions$Compression ProtocolVersion]
            [com.datastax.driver.auth DseAuthProvider]
            [com.google.common.util.concurrent Futures FutureCallback]
            java.net.URI
@@ -116,7 +116,7 @@
       (.withAuthProvider builder (DseAuthProvider.)))
     (.build builder)))
 
-(defn- ^JdkSSLOptions build-ssl-options
+(defn- ^SSLOptions build-ssl-options
   [{:keys [keystore-path keystore-password cipher-suites]}]
   (let [keystore-stream (io/input-stream keystore-path)
         keystore (KeyStore/getInstance "JKS")
@@ -133,7 +133,7 @@
     (.init keymanager keystore password)
     (.init trustmanager keystore)
     (.init ssl-context (.getKeyManagers keymanager) (.getTrustManagers trustmanager) nil)
-    (.. (JdkSSLOptions$Builder.)
+    (.. (JdkSSLOptions/builder)
         (withSSLContext ssl-context)
         (withCipherSuites ssl-cipher-suites)
         (build))))
