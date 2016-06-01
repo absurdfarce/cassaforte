@@ -93,7 +93,7 @@
     (when credentials
       (.withCredentials builder (:username credentials) (:password credentials)))
     (when cluster-name
-      (.withClusterName builder cluster-name)
+      (.withClusterName builder cluster-name))
     (when connections-per-host
       (.setCoreConnectionsPerHost pooling-options HostDistance/LOCAL
                                   connections-per-host))

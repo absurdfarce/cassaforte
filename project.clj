@@ -1,4 +1,4 @@
-(defproject absurdfarce/cassaforte "2.0.1-30drivers-1.0.2"
+(defproject com.datastax.opscenter/cassaforte "2.0.1-30drivers-1.0.3"
   :min-lein-version "2.5.0"
   :description "A Clojure client for Apache Cassandra"
   :url "http://clojurecassandra.info"
@@ -30,12 +30,10 @@
                    :indexes :indexes
                    :default (fn [m] (not (:stress m)))
                    :ci      (complement :skip-ci)}
-  :repositories {"sonatype" {:url "http://oss.sonatype.org/content/repositories/releases"
-                             :snapshots false
-                             :releases {:checksum :fail :update :always}}
-                 "sonatype-snapshots" {:url "http://oss.sonatype.org/content/repositories/snapshots"
-                                       :snapshots true
-                                       :releases {:checksum :fail :update :always}}}
+  :repositories {"new-artifactory" {:url "tobesuppliedlater"
+                                    :snapshots false
+                                    :releases {:checksum :fail :update :always}
+                                    :sign-releases false}}
   :global-vars {*warn-on-reflection* true}
   :pedantic :warn
   :codox {:src-dir-uri "https://github.com/clojurewerkz/cassaforte/blob/master/"
