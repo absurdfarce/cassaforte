@@ -26,7 +26,7 @@
             [qbits.hayt.cql :as hayt])
   (:import [com.datastax.driver.core Statement ResultSet ResultSetFuture Host Session Cluster
             Cluster$Builder SimpleStatement PreparedStatement HostDistance PoolingOptions
-            SSLOptions JdkSSLOptions ProtocolOptions$Compression ProtocolVersion]
+            SSLOptions JdkSSLOptions ProtocolOptions$Compression ProtocolVersion QueryOptions]
            [com.datastax.driver.auth DseAuthProvider]
            [com.google.common.util.concurrent Futures FutureCallback]
            java.net.URI
@@ -117,6 +117,9 @@
       (.withSSL builder ssl-options))
     (when kerberos
       (.withAuthProvider builder (DseAuthProvider.)))
+    (when consistency-level
+      (.withQueryOptions builder (doto (QueryOptions.)
+                                   (.setConsistencyLevel (cp/resolve-consistency-level consistency-level)))))
     (.build builder)))
 
 (defn- ^SSLOptions build-ssl-options
