@@ -27,7 +27,7 @@
   (:import [com.datastax.driver.core Statement ResultSet ResultSetFuture Host Session Cluster
             Cluster$Builder SimpleStatement PreparedStatement HostDistance PoolingOptions
             SSLOptions JdkSSLOptions ProtocolOptions$Compression ProtocolVersion QueryOptions]
-           [com.datastax.driver.auth DseAuthProvider]
+           [com.datastax.driver.dse.auth DseAuthProvider]
            [com.google.common.util.concurrent Futures FutureCallback]
            java.net.URI
            [javax.net.ssl TrustManagerFactory KeyManagerFactory SSLContext]
