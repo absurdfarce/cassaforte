@@ -126,7 +126,7 @@
   [{:keys [keystore-path keystore-password cipher-suites]}]
   (let [keystore-stream (io/input-stream keystore-path)
         keystore        (KeyStore/getInstance "JKS")
-        ssl-context     (SSLContext/getInstance "SSL")
+        ssl-context     (SSLContext/getInstance "TLS")
         keymanager      (KeyManagerFactory/getInstance (KeyManagerFactory/getDefaultAlgorithm))
         trustmanager    (TrustManagerFactory/getInstance (TrustManagerFactory/getDefaultAlgorithm))
         password        (char-array keystore-password)]
