@@ -138,7 +138,7 @@
     (.init trustmanager keystore)
     (.init ssl-context (.getKeyManagers keymanager) (.getTrustManagers trustmanager) nil)
     (when cipher-suites
-      (.withCipherSuites (into-array String cipher-suites)))
+      (.withCipherSuites builder (into-array String cipher-suites)))
     (.build builder)))
 
 (defn- ^ProtocolOptions$Compression select-compression
