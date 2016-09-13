@@ -1,4 +1,4 @@
-(defproject com.datastax.opscenter/cassaforte "2.0.1-30drivers-1.0.5"
+(defproject com.datastax.opscenter/cassaforte "2.0.1-30drivers-1.0.6"
   :min-lein-version "2.5.0"
   :description "A Clojure client for Apache Cassandra"
   :url "http://clojurecassandra.info"

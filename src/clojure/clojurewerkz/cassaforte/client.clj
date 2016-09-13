@@ -125,24 +125,19 @@
 (defn- ^SSLOptions build-ssl-options
   [{:keys [keystore-path keystore-password cipher-suites]}]
   (let [keystore-stream (io/input-stream keystore-path)
-        keystore (KeyStore/getInstance "JKS")
-        ssl-context (SSLContext/getInstance "SSL")
-        keymanager (KeyManagerFactory/getInstance (KeyManagerFactory/getDefaultAlgorithm))
-        trustmanager (TrustManagerFactory/getInstance (TrustManagerFactory/getDefaultAlgorithm))
-        password (char-array keystore-password)
-        ssl-cipher-suites (if cipher-suites
-                            (into-array String cipher-suites)
-                            ;; v3.0 of the drivers dropped SSLOptions.DEFAULT_SSL_CIPHER_SUITES so we'll just re-use
-                            ;; the literal here.
-                            (into-array String ["TLS_RSA_WITH_AES_128_CBC_SHA" "TLS_RSA_WITH_AES_256_CBC_SHA"]))]
+        keystore        (KeyStore/getInstance "JKS")
+        ssl-context     (SSLContext/getInstance "SSL")
+        keymanager      (KeyManagerFactory/getInstance (KeyManagerFactory/getDefaultAlgorithm))
+        trustmanager    (TrustManagerFactory/getInstance (TrustManagerFactory/getDefaultAlgorithm))
+        password        (char-array keystore-password)]
+    ;; Side effects everywhere!
     (.load keystore keystore-stream password)
     (.init keymanager keystore password)
     (.init trustmanager keystore)
     (.init ssl-context (.getKeyManagers keymanager) (.getTrustManagers trustmanager) nil)
-    (.. (JdkSSLOptions/builder)
-        (withSSLContext ssl-context)
-        (withCipherSuites ssl-cipher-suites)
-        (build))))
+    (.build (cond-> (JdkSSLOptions/builder)
+              true          (.withSSLContext ssl-context)
+              cipher-suites (.withCipherSuites (into-array String cipher-suites))))))
 
 (defn- ^ProtocolOptions$Compression select-compression
   [compression]
