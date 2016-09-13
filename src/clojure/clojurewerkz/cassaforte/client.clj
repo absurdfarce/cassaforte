@@ -129,15 +129,17 @@
         ssl-context     (SSLContext/getInstance "TLS")
         keymanager      (KeyManagerFactory/getInstance (KeyManagerFactory/getDefaultAlgorithm))
         trustmanager    (TrustManagerFactory/getInstance (TrustManagerFactory/getDefaultAlgorithm))
-        password        (char-array keystore-password)]
+        password        (char-array keystore-password)
+        builder         (doto (JdkSSLOptions/builder)
+                          (.withSSLContext ssl-context)) ]
     ;; Side effects everywhere!
     (.load keystore keystore-stream password)
     (.init keymanager keystore password)
     (.init trustmanager keystore)
     (.init ssl-context (.getKeyManagers keymanager) (.getTrustManagers trustmanager) nil)
-    (.build (cond-> (JdkSSLOptions/builder)
-              true          (.withSSLContext ssl-context)
-              cipher-suites (.withCipherSuites (into-array String cipher-suites))))))
+    (when cipher-suites
+      (.withCipherSuites (into-array String cipher-suites)))
+    (.build builder)))
 
 (defn- ^ProtocolOptions$Compression select-compression
   [compression]
