@@ -27,7 +27,7 @@
   (:import [com.datastax.driver.core Statement ResultSet ResultSetFuture Host Session Cluster
             Cluster$Builder SimpleStatement PreparedStatement HostDistance PoolingOptions
             SSLOptions JdkSSLOptions ProtocolOptions$Compression ProtocolVersion QueryOptions]
-           [com.datastax.driver.dse.auth DseAuthProvider]
+           [com.datastax.driver.dse.auth DsePlainTextAuthProvider DseGSSAPIAuthProvider]
            [com.google.common.util.concurrent Futures FutureCallback]
            java.net.URI
            [javax.net.ssl TrustManagerFactory KeyManagerFactory SSLContext]
@@ -91,7 +91,7 @@
     (when protocol-version
       (.withProtocolVersion builder (ProtocolVersion/fromInt protocol-version)))
     (when credentials
-      (.withCredentials builder (:username credentials) (:password credentials)))
+      (.withAuthProvider builder (DsePlainTextAuthProvider. (:username credentials) (:password credentials))))
     (when cluster-name
       (.withClusterName builder cluster-name))
     (when connections-per-host
@@ -116,7 +116,7 @@
     (when ssl-options
       (.withSSL builder ssl-options))
     (when kerberos
-      (.withAuthProvider builder (DseAuthProvider.)))
+      (.withAuthProvider builder (DseGSSAPIAuthProvider.)))
     (when consistency-level
       (.withQueryOptions builder (doto (QueryOptions.)
                                    (.setConsistencyLevel (cp/resolve-consistency-level consistency-level)))))
@@ -347,3 +347,4 @@
   ([^ResultSetFuture future ^long timeout-ms]
      (conv/to-clj (.get future timeout-ms
                         java.util.concurrent.TimeUnit/MILLISECONDS))))
+
