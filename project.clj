@@ -1,4 +1,4 @@
-(defproject com.datastax.opscenter/cassaforte "2.0.1-30drivers-1.0.9"
+(defproject com.datastax.opscenter/cassaforte "2.0.1-30drivers-1.0.10"
   :min-lein-version "2.5.0"
   :description "A Clojure client for Apache Cassandra"
   :url "http://clojurecassandra.info"
@@ -6,8 +6,9 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure                          "1.6.0"]
                  [cc.qbits/hayt                                "2.0.0"]
-                 [com.datastax.cassandra/cassandra-driver-core "3.1.2"]
-                 [com.datastax.cassandra/dse-driver            "1.1.1-beta1"]]
+                 [org.slf4j/slf4j-api                          "1.7.7"]
+                 [com.datastax.cassandra/cassandra-driver-core "3.1.2" :exclusions [org.slf4j/slf4j-api]]
+                 [com.datastax.cassandra/dse-driver            "1.2.0-eap2" :exclusions [org.slf4j/slf4j-api]]]
   :source-paths      ["src/clojure"]
   :java-source-paths ["src/java"]
   :profiles       {:1.7 {:dependencies [[org.clojure/clojure "1.7.0-alpha4"]]}
@@ -30,10 +31,10 @@
                    :indexes :indexes
                    :default (fn [m] (not (:stress m)))
                    :ci      (complement :skip-ci)}
-  :repositories {"new-artifactory" {:url "tobesuppliedlater"
-                                    :snapshots false
-                                    :releases {:checksum :fail :update :always}
-                                    :sign-releases false}}
+  :repositories {"artifactory-deploy" {:url "tobesuppliedlater"
+                                       :snapshots false
+                                       :releases {:checksum :fail :update :always}
+                                       :sign-releases false}}
   :global-vars {*warn-on-reflection* true}
   :pedantic :warn
   :codox {:src-dir-uri "https://github.com/clojurewerkz/cassaforte/blob/master/"
