@@ -31,10 +31,10 @@
                    :indexes :indexes
                    :default (fn [m] (not (:stress m)))
                    :ci      (complement :skip-ci)}
-  :repositories {"new-artifactory" {:url "tobesuppliedlater"
-                                    :snapshots false
-                                    :releases {:checksum :fail :update :always}
-                                    :sign-releases false}}
+  :repositories {"artifactory-deploy" {:url "tobesuppliedlater"
+                                       :snapshots false
+                                       :releases {:checksum :fail :update :always}
+                                       :sign-releases false}}
   :global-vars {*warn-on-reflection* true}
   :pedantic :warn
   :codox {:src-dir-uri "https://github.com/clojurewerkz/cassaforte/blob/master/"
