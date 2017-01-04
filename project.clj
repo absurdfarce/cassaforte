@@ -1,4 +1,4 @@
-(defproject com.datastax.opscenter/cassaforte "2.0.1-30drivers-1.0.10"
+(defproject com.datastax.opscenter/cassaforte "2.0.1-30drivers-1.0.11"
   :min-lein-version "2.5.0"
   :description "A Clojure client for Apache Cassandra"
   :url "http://clojurecassandra.info"
@@ -7,7 +7,7 @@
   :dependencies [[org.clojure/clojure                          "1.6.0"]
                  [cc.qbits/hayt                                "2.0.0"]
                  [org.slf4j/slf4j-api                          "1.7.7"]
-                 [com.datastax.cassandra/cassandra-driver-core "3.1.2" :exclusions [org.slf4j/slf4j-api]]
+                 [com.datastax.cassandra/cassandra-driver-core "3.1.3" :exclusions [org.slf4j/slf4j-api]]
                  [com.datastax.cassandra/dse-driver            "1.2.0-eap2" :exclusions [org.slf4j/slf4j-api]]]
   :source-paths      ["src/clojure"]
   :java-source-paths ["src/java"]
