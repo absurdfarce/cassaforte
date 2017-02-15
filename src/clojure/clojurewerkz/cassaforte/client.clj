@@ -123,7 +123,7 @@
     (.build builder)))
 
 (defn- ^SSLOptions build-ssl-options
-  [{:keys [keystore-path keystore-password cipher-suites]}]
+  [{:keys [keystore-path keystore-password truststore-path truststore-password cipher-suites]}]
   (let [keystore-stream (io/input-stream keystore-path)
         keystore        (KeyStore/getInstance "JKS")
         ssl-context     (SSLContext/getInstance "TLS")
@@ -135,7 +135,14 @@
     ;; Side effects everywhere!
     (.load keystore keystore-stream password)
     (.init keymanager keystore password)
-    (.init trustmanager keystore)
+    ;; Is there a separate truststore defined?
+    (if (and truststore-path (not= truststore-path keystore-path))
+      (let [truststore-stream (io/input-stream truststore-path)
+            truststore        (KeyStore/getInstance "JKS")]
+        (.load truststore truststore-stream (char-array truststore-password))
+        (.init trustmanager truststore))
+      ;; truststore and keystore are the same
+      (.init trustmanager keystore))
     (.init ssl-context (.getKeyManagers keymanager) (.getTrustManagers trustmanager) nil)
     (when cipher-suites
       (.withCipherSuites builder (into-array String cipher-suites)))
