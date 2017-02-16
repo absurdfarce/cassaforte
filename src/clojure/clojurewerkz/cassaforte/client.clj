@@ -136,13 +136,12 @@
     (.load keystore keystore-stream password)
     (.init keymanager keystore password)
     ;; Is there a separate truststore defined?
-    (if (and truststore-path (not= truststore-path keystore-path))
-      (let [truststore-stream (io/input-stream truststore-path)
-            truststore        (KeyStore/getInstance "JKS")]
-        (.load truststore truststore-stream (char-array truststore-password))
-        (.init trustmanager truststore))
-      ;; truststore and keystore are the same
-      (.init trustmanager keystore))
+    (let [truststore-path     (or truststore-path keystore-path)
+          truststore-password (or truststore-password keystore-password)
+          truststore-stream   (io/input-stream truststore-path)
+          truststore          (KeyStore/getInstance "JKS")]
+      (.load truststore truststore-stream (char-array truststore-password))
+      (.init trustmanager truststore))
     (.init ssl-context (.getKeyManagers keymanager) (.getTrustManagers trustmanager) nil)
     (when cipher-suites
       (.withCipherSuites builder (into-array String cipher-suites)))
