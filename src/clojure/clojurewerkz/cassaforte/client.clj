@@ -28,7 +28,6 @@
             Cluster$Builder SimpleStatement PreparedStatement HostDistance PoolingOptions
             SSLOptions JdkSSLOptions ProtocolOptions$Compression ProtocolVersion QueryOptions]
            [com.datastax.driver.dse.auth DsePlainTextAuthProvider DseGSSAPIAuthProvider]
-           [com.google.common.util.concurrent Futures FutureCallback]
            java.net.URI
            [javax.net.ssl TrustManagerFactory KeyManagerFactory SSLContext]
            [java.security KeyStore SecureRandom]
