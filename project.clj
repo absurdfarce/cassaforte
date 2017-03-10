@@ -7,7 +7,7 @@
   :dependencies [[org.clojure/clojure                          "1.6.0"]
                  [cc.qbits/hayt                                "2.0.0"]
                  [org.slf4j/slf4j-api                          "1.7.7"]
-                 [com.datastax.dse/dse-java-driver-core        "1.2.0-rc2" :exclusions [org.slf4j/slf4j-api]]]
+                 [com.datastax.dse/dse-java-driver-core        "1.2.0-rc3" :exclusions [org.slf4j/slf4j-api]]]
   :source-paths      ["src/clojure"]
   :java-source-paths ["src/java"]
   :profiles       {:1.7 {:dependencies [[org.clojure/clojure "1.7.0-alpha4"]]}
