@@ -1,4 +1,4 @@
-(defproject com.datastax.opscenter/cassaforte "2.0.1-30drivers-1.0.15"
+(defproject com.datastax.opscenter/cassaforte "2.0.1-30drivers-1.0.16"
   :min-lein-version "2.5.0"
   :description "A Clojure client for Apache Cassandra"
   :url "http://clojurecassandra.info"
@@ -34,9 +34,8 @@
                                        :snapshots false
                                        :releases {:checksum :fail :update :always}
                                        :sign-releases false}
-                 "dse-driver" {:url "https://datastax.artifactoryonline.com/datastax/datastax-releases-local"
-                               :username "nope"
-                               :password "noway"}}
+                 "ds-releases-local" {:url "https://datastax.jfrog.io/datastax/datastax-releases-local"
+                                      :snapshots false}}
   :global-vars {*warn-on-reflection* true}
   :pedantic :warn
   :codox {:src-dir-uri "https://github.com/clojurewerkz/cassaforte/blob/master/"
