@@ -34,9 +34,8 @@
                                        :snapshots false
                                        :releases {:checksum :fail :update :always}
                                        :sign-releases false}
-                 "dse-driver" {:url "https://datastax.artifactoryonline.com/datastax/datastax-releases-local"
-                               :username "nope"
-                               :password "noway"}}
+                 "ds-releases-local" {:url "https://datastax.jfrog.io/datastax/datastax-releases-local"
+                                      :snapshots false}}
   :global-vars {*warn-on-reflection* true}
   :pedantic :warn
   :codox {:src-dir-uri "https://github.com/clojurewerkz/cassaforte/blob/master/"
