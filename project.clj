@@ -30,11 +30,13 @@
                    :indexes :indexes
                    :default (fn [m] (not (:stress m)))
                    :ci      (complement :skip-ci)}
-  :repositories {"artifactory-deploy" {:url "tobesuppliedlater"
-                                       :snapshots false
-                                       :releases {:checksum :fail :update :always}
-                                       :sign-releases false}
-                 "ds-releases-local" {:url "https://datastax.jfrog.io/datastax/datastax-releases-local"
+  :repositories {"ds-public-releases-local" {:url "https://repo.datastax.com/datastax-public-releases-local"
+                                             :snapshots false
+                                             :username [:gpg :env/ds_repo_user]
+                                             :password [:gpg :env/ds_repo_pass]
+                                             :releases {:checksum :fail :update :always}
+                                             :sign-releases false}
+                 "ds-releases-local" {:url "https://repo.datastax.com/datastax-releases-local"
                                       :snapshots false}}
   :global-vars {*warn-on-reflection* true}
   :pedantic :warn
