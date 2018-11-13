@@ -1,4 +1,4 @@
-(defproject com.datastax.opscenter/cassaforte "2.0.1-30drivers-1.0.12"
+(defproject com.datastax.opscenter/cassaforte "2.0.1-30drivers-1.0.21"
   :min-lein-version "2.5.0"
   :description "A Clojure client for Apache Cassandra"
   :url "http://clojurecassandra.info"
@@ -7,11 +7,11 @@
   :dependencies [[org.clojure/clojure                          "1.6.0"]
                  [cc.qbits/hayt                                "2.0.0"]
                  [org.slf4j/slf4j-api                          "1.7.7"]
-                 [com.datastax.cassandra/cassandra-driver-core "3.1.3" :exclusions [org.slf4j/slf4j-api]]
-                 [com.datastax.cassandra/dse-driver            "1.2.0-eap2" :exclusions [org.slf4j/slf4j-api]]]
+                 [com.datastax.dse/dse-java-driver-core        "1.7.0" :exclusions [org.slf4j/slf4j-api]]]
   :source-paths      ["src/clojure"]
   :java-source-paths ["src/java"]
   :profiles       {:1.7 {:dependencies [[org.clojure/clojure "1.7.0-alpha4"]]}
+                   :1.10 {:dependencies [[org.clojure/clojure "1.10.0-beta5"]]}
                    :master {:dependencies [[org.clojure/clojure "1.7.0-master-SNAPSHOT"]]}
                    :dev {:jvm-opts     ["-Dlog4j.configuration=log4j.properties.unit"
                                         "-Xmx2048m"
@@ -31,10 +31,20 @@
                    :indexes :indexes
                    :default (fn [m] (not (:stress m)))
                    :ci      (complement :skip-ci)}
-  :repositories {"artifactory-deploy" {:url "tobesuppliedlater"
-                                       :snapshots false
-                                       :releases {:checksum :fail :update :always}
-                                       :sign-releases false}}
+  :repositories {"ds-public-releases-local" {:url "https://repo.datastax.com/datastax-public-releases-local"
+                                             :snapshots false
+                                             :username [:gpg :env/ds_repo_user]
+                                             :password [:gpg :env/ds_repo_pass]
+                                             :releases {:checksum :fail :update :always}
+                                             :sign-releases false}
+                 "ds-releases-local" {:url "https://repo.datastax.com/datastax-releases-local"
+                                      :snashots false
+                                      :username [:gpg :env/ds_repo_user]
+                                      :password [:gpg :env/ds_repo_pass]}
+                 "ds-snapshots-local" {:url "https://repo.datastax.com/datastax-snapshots-local"
+                                      :snashots false
+                                      :username [:gpg :env/ds_repo_user]
+                                      :password [:gpg :env/ds_repo_pass]}}
   :global-vars {*warn-on-reflection* true}
   :pedantic :warn
   :codox {:src-dir-uri "https://github.com/clojurewerkz/cassaforte/blob/master/"
