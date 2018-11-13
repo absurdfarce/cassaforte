@@ -1,4 +1,4 @@
-(defproject com.datastax.opscenter/cassaforte "2.0.1-30drivers-1.0.20"
+(defproject com.datastax.opscenter/cassaforte "2.0.1-30drivers-1.0.21"
   :min-lein-version "2.5.0"
   :description "A Clojure client for Apache Cassandra"
   :url "http://clojurecassandra.info"
@@ -11,6 +11,7 @@
   :source-paths      ["src/clojure"]
   :java-source-paths ["src/java"]
   :profiles       {:1.7 {:dependencies [[org.clojure/clojure "1.7.0-alpha4"]]}
+                   :1.10 {:dependencies [[org.clojure/clojure "1.10.0-beta5"]]}
                    :master {:dependencies [[org.clojure/clojure "1.7.0-master-SNAPSHOT"]]}
                    :dev {:jvm-opts     ["-Dlog4j.configuration=log4j.properties.unit"
                                         "-Xmx2048m"
